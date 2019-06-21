@@ -42,11 +42,11 @@ export default {
     }
   },
   created() {
-    console.info(this.card_data)
+    console.info(this.card_data);
   },
   computed: {},
   methods: {}
-}
+};
 </script>
 
 <style scoped>

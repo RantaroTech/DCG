@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import InGame from '@/components/InGame'
+import InGame from '@/vews/InGame'
 
 Vue.use(Router)
 

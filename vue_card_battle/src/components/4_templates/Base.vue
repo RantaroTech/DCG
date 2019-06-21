@@ -44,10 +44,10 @@
 </template>
 
 <script>
-import BaseStatus from '@/components/UI/BaseStatus'
-import Character from '@/components/UI/Character'
-import Card from '@/components/UI/Card'
-import store from '../store/store'
+import BaseStatus from "@/components/1_atoms/BaseStatus";
+import Character from "@/components/1_atoms/Character";
+import Card from "@/components/1_atoms/Card";
+import store from "@/store/store";
 
 export default {
   components: {
@@ -59,58 +59,58 @@ export default {
   data() {
     return {
       card_data: {
-        rock: { name: 'rock', atack: 1000, is_show: true, is_choice: false },
+        rock: { name: "rock", atack: 1000, is_show: true, is_choice: false },
         scissors: {
-          name: 'scissors',
+          name: "scissors",
           atack: 500,
           is_show: true,
           is_choice: false
         },
-        paper: { name: 'paper', atack: 300, is_show: true, is_choice: false }
+        paper: { name: "paper", atack: 300, is_show: true, is_choice: false }
       },
-      card_type: ['rock', 'scissors', 'paper']
-    }
+      card_type: ["rock", "scissors", "paper"]
+    };
   },
   methods: {
     tapCard: function(type) {
-      console.info(this.$store)
-      console.info(this.$store.state)
-      this.setShowCard(type)
-      this.choiceCard(type)
+      console.info(this.$store);
+      console.info(this.$store.state);
+      this.setShowCard(type);
+      this.choiceCard(type);
     },
     choiceCard: function(type) {
-      if (type === 'rock') {
-        console.info('グーだ！')
-        this.card_data.rock.is_choice = true
+      if (type === "rock") {
+        console.info("グーだ！");
+        this.card_data.rock.is_choice = true;
       }
-      if (type === 'scissors') {
-        console.info('チョキだ！')
-        this.card_data.scissors.is_choice = true
+      if (type === "scissors") {
+        console.info("チョキだ！");
+        this.card_data.scissors.is_choice = true;
       }
-      if (type === 'paper') {
-        console.info('パーだ！')
-        this.card_data.paper.is_choice = true
+      if (type === "paper") {
+        console.info("パーだ！");
+        this.card_data.paper.is_choice = true;
       }
     },
     setShowCard: function(type) {
-      if (type !== 'rock') {
-        console.info('グーじゃない')
-        this.card_data.rock.is_show = false
-        this.card_data.rock.is_choice = false
+      if (type !== "rock") {
+        console.info("グーじゃない");
+        this.card_data.rock.is_show = false;
+        this.card_data.rock.is_choice = false;
       }
-      if (type !== 'scissors') {
-        console.info('チョキじゃない')
-        this.card_data.scissors.is_show = false
-        this.card_data.scissors.is_choice = false
+      if (type !== "scissors") {
+        console.info("チョキじゃない");
+        this.card_data.scissors.is_show = false;
+        this.card_data.scissors.is_choice = false;
       }
-      if (type !== 'paper') {
-        console.info('パーじゃない')
-        this.card_data.paper.is_show = false
-        this.card_data.paper.is_choice = false
+      if (type !== "paper") {
+        console.info("パーじゃない");
+        this.card_data.paper.is_show = false;
+        this.card_data.paper.is_choice = false;
       }
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -122,7 +122,7 @@ export default {
   content: "";
   display: block;
   padding-top: 178%; /* 4:3の比率の場合 100% / 4 *3 1136/640 = 1.78 */
-  background-image: url("../../assets/bg.jpg");
+  background-image: url("../../../assets/bg.jpg");
   background-size: 120%;
   background-repeat: no-repeat;
 }

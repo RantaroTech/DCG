@@ -5,13 +5,13 @@
 </template>
 
 <script>
-import Base from './Base.vue';
+import Base from "@/components/4_templates/Base.vue";
+
 export default {
   components: {
     Base
-  },
-  data () {}
-}
+  }
+};
 </script>
 
 <style scoped>
