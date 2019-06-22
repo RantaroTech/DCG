@@ -8,14 +8,14 @@ const enemyModule = {
         hp: 2600,
       },
       card_data: {
-        rock: { name: 'rock', atack: 1000, is_show: true, is_choice: false },
+        rock: { name: 'rock', atack: 666, is_show: true, is_choice: false },
         scissors: {
           name: 'scissors',
-          atack: 500,
+          atack: 444,
           is_show: true,
           is_choice: false
         },
-        paper: { name: 'paper', atack: 300, is_show: true, is_choice: false }
+        paper: { name: 'paper', atack: 333, is_show: true, is_choice: false }
       }
     }
   },

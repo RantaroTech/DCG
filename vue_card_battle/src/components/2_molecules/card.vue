@@ -100,14 +100,14 @@ export default {
 /* クラスをバインドして切り替え */
 .rock {
   border: 3px solid red;
-  background: white;
+  background: #f16a60;
 }
 .scissors {
   border: 3px solid green;
-  background: white;
+  background: #0fe618;
 }
 .paper {
-  border: 3px solid yellow;
-  background: white;
+  border: 3px solid blue;
+  background: #04b1ffd9;
 }
 </style>

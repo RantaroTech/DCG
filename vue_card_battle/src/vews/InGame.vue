@@ -2,7 +2,6 @@
   <div>
     <Base/>
     <div class="btn" @click="goInGame()">リザルトへ</div>
-    <div class="reset_btn" @click="reset()">リセット</div>
   </div>
 </template>
 

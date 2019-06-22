@@ -3,20 +3,36 @@
     <div id="base_area">
       <!-- 対戦相手サイド -->
       <BaseStatus
-        :hp="enemyModule.user_status_data.hp"
+        :hp="setStateHp(enemyModule.user_status_data.hp)"
         style="position: absolute;top: 10px;right: 10px;background:#ff3e3e;"
       >
-        <div v-if="enemyModule.user_status_data.hp > 0">{{enemyModule.user_status_data.hp}}</div>
-        <div v-if="enemyModule.user_status_data.hp <= 0">0</div>
         <div v-if="this.enemy_choice_card_type ==='rock'">✊</div>
         <div v-if="this.enemy_choice_card_type ==='scissors'">✌️</div>
         <div v-if="this.enemy_choice_card_type ==='paper'">🖐</div>
       </BaseStatus>
       <Character :character_id="2" style="position: absolute;top: 0;left: 0;"></Character>
 
+      <div v-if="this.show_enemy_card" class="enemy_card_pos">
+        <Card
+          v-bind:card_data="enemyModule.card_data.rock"
+          v-if="this.enemy_choice_card_type == 'rock'"
+        ></Card>
+        <Card
+          v-bind:card_data="enemyModule.card_data.scissors"
+          v-if="this.enemy_choice_card_type == 'scissors'"
+        ></Card>
+        <Card
+          v-bind:card_data="enemyModule.card_data.paper"
+          v-if="this.enemy_choice_card_type == 'paper'"
+        ></Card>
+      </div>
+      <div v-if="this.user_round_win" class="aiko_label">いいぞ！</div>
+      <div v-if="this.show_aiko_label" class="aiko_label">あいこだ</div>
+      <div v-if="this.user_round_lose" class="aiko_label">まずい…</div>
+
       <div class="janken_area">
         <!-- 自分のじゃんけんカードエリア -->
-        <div class="card" @click="tapCard(userModule.card_data.rock.name)">
+        <div class="user_card" @click="tapCard(userModule.card_data.rock.name)">
           <Card
             v-bind:card_data="userModule.card_data.rock"
             v-show="userModule.card_data.rock.is_show"
@@ -25,7 +41,7 @@
         </div>
 
         <div
-          class="card"
+          class="user_card"
           v-if="userModule.card_data.scissors"
           @click="tapCard(userModule.card_data.scissors.name)"
         >
@@ -37,7 +53,7 @@
         </div>
 
         <div
-          class="card"
+          class="user_card"
           v-if="userModule.card_data.paper"
           @click="tapCard(userModule.card_data.paper.name)"
         >
@@ -51,14 +67,16 @@
 
       <!-- 自分サイド -->
       <BaseStatus
-        :hp="userModule.user_status_data.hp"
+        :hp="setStateHp(userModule.user_status_data.hp)"
         style="position: absolute;bottom: 10px;left: 10px;"
-      >{{userModule.user_status_data.hp}}</BaseStatus>
-      <Character :character_id="1" style="position: absolute;bottom: 0;right: 0;">
-        <div class="serect_text red" v-show="userModule.card_data.rock.is_choice">グー✊を選択</div>
-        <div class="serect_text green" v-show="userModule.card_data.scissors.is_choice">チョキ✌️を選択</div>
-        <div class="serect_text yellow" v-show="userModule.card_data.paper.is_choice">パー✋を選択</div>
-      </Character>
+      >{{this.enemy_choice_card_type}}</BaseStatus>
+      <div @click="allReseet()">
+        <Character :character_id="1" style="position: absolute;bottom: 0;right: 0;">
+          <div class="serect_text red" v-show="userModule.card_data.rock.is_choice">グー✊を選択</div>
+          <div class="serect_text green" v-show="userModule.card_data.scissors.is_choice">チョキ✌️を選択</div>
+          <div class="serect_text yellow" v-show="userModule.card_data.paper.is_choice">パー✋を選択</div>
+        </Character>
+      </div>
     </div>
   </div>
 </template>
@@ -83,15 +101,27 @@ export default {
   data() {
     return {
       card_type: ["rock", "scissors", "paper"],
-      enemy_choice_card_type: null
+      enemy_choice_card_type: null,
+      show_enemy_card: false,
+      user_round_win: false,
+      user_round_lose: false,
+      show_aiko_label: false
     };
   },
   methods: {
+    setStateHp: function(hp) {
+      if (hp <= 0) {
+        return 0;
+      }
+      return hp;
+    },
     tapCard: function(type) {
       console.info(this.$store);
       this.setShowCard(type);
       this.choiceCard(type);
       this.randamChoice();
+      this.show_enemy_card = true;
+      this.roundReset();
     },
     randamChoice: function() {
       const ran = Math.random();
@@ -106,14 +136,17 @@ export default {
     choiceRock: function() {
       this.$nextTick(() => {
         if (this.enemy_choice_card_type === "rock") {
+          this.show_aiko_label = true;
           this.$store.dispatch("userModule/setChangeHp", 300);
           this.$store.dispatch("enemyModule/setChangeHp", 300);
         } else if (this.enemy_choice_card_type === "scissors") {
+          this.user_round_win = true;
           this.$store.dispatch(
             "enemyModule/setChangeHp",
             this.userModule.card_data.rock.atack
           );
         } else if (this.enemy_choice_card_type === "paper") {
+          this.user_round_lose = true;
           this.$store.dispatch(
             "userModule/setChangeHp",
             this.enemyModule.card_data.paper.atack
@@ -124,14 +157,17 @@ export default {
     choiceScissors: function() {
       this.$nextTick(() => {
         if (this.enemy_choice_card_type === "rock") {
+          this.user_round_lose = true;
           this.$store.dispatch(
             "userModule/setChangeHp",
             this.enemyModule.card_data.rock.atack
           );
         } else if (this.enemy_choice_card_type === "scissors") {
+          this.show_aiko_label = true;
           this.$store.dispatch("userModule/setChangeHp", 300);
           this.$store.dispatch("enemyModule/setChangeHp", 300);
         } else if (this.enemy_choice_card_type === "paper") {
+          this.user_round_win = true;
           this.$store.dispatch(
             "enemyModule/setChangeHp",
             this.userModule.card_data.scissors.atack
@@ -142,16 +178,19 @@ export default {
     choicePaper: function() {
       this.$nextTick(() => {
         if (this.enemy_choice_card_type === "rock") {
+          this.user_round_win = true;
           this.$store.dispatch(
             "enemyModule/setChangeHp",
             this.userModule.card_data.paper.atack
           );
         } else if (this.enemy_choice_card_type === "scissors") {
+          this.user_round_lose = true;
           this.$store.dispatch(
             "userModule/setChangeHp",
             this.enemyModule.card_data.scissors.atack
           );
         } else if (this.enemy_choice_card_type === "paper") {
+          this.show_aiko_label = true;
           this.$store.dispatch("userModule/setChangeHp", 300);
           this.$store.dispatch("enemyModule/setChangeHp", 300);
         }
@@ -179,6 +218,17 @@ export default {
       if (type !== "paper") {
         this.$store.dispatch("userModule/setHidePaper");
       }
+    },
+    roundReset: function() {
+      setTimeout(this.allReseet, 3000);
+    },
+    allReseet: function() {
+      this.enemy_choice_card_type = null;
+      this.show_enemy_card = false;
+      this.user_round_win = false;
+      this.user_round_lose = false;
+      this.show_aiko_label = false;
+      this.$store.dispatch("userModule/roundEndCard");
     }
   }
 };
@@ -192,7 +242,8 @@ export default {
 #wrapper:before {
   content: "";
   display: block;
-  padding-top: 178%; /* 4:3の比率の場合 100% / 4 *3 1136/640 = 1.78 */
+  /* padding-top: 178%;  */
+  padding-top: 100vh; /* 4:3の比率の場合 100% / 4 *3 1136/640 = 1.78 */
   background-image: url("../../../assets/bg.jpg");
   background-size: 120%;
   background-repeat: no-repeat;
@@ -211,9 +262,14 @@ export default {
   height: 390px;
   position: absolute;
   top: 125px;
-  background: #4caf5099;
+  /* background: #4caf5099; */
 }
 
+.enemy_card_pos {
+  position: absolute;
+  top: 60px;
+  left: 110px;
+}
 .red {
   background: red;
 }
@@ -221,15 +277,19 @@ export default {
   background: green;
 }
 .yellow {
-  background: yellow;
+  background: blue;
 }
 
 @keyframes ImgAnime {
   0% {
     transform: scale(1);
+    top: 200px;
+    left: 110px;
   }
   100% {
     transform: scale(1.2);
+    top: 300px;
+    left: 110px;
   }
 }
 
@@ -261,12 +321,12 @@ export default {
   animation-fill-mode: forwards;
 }
 
-.rock {
+.user_card .rock {
   position: absolute;
   top: 30px;
   left: 110px;
 }
-.card .rock_choice {
+.user_card .rock_choice {
   -webkit-animation: ImgAnime 0.1s linear 0s;
   -moz-animation: ImgAnime 0.1s linear 0s;
   -o-animation: ImgAnime 0.1s linear 0s;
@@ -276,7 +336,6 @@ export default {
 }
 .serect_text {
   width: 220px;
-  /* background: dodgerblue; */
   border: solid 2px black;
   text-align: center;
   font-size: 28px;
@@ -286,15 +345,30 @@ export default {
   right: 0;
 }
 
-.scissors {
+.user_card .scissors {
   position: absolute;
   top: 210px;
   left: 20px;
 }
 
-.paper {
+.user_card .paper {
   position: absolute;
   top: 210px;
   left: 195px;
+}
+.aiko_label {
+  position: absolute;
+  top: 45%;
+  left: 30vw;
+  width: 40vw;
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  background: gold;
+}
+.end_game {
+  width: 100%;
+  height: 100%;
+  background: grey;
 }
 </style>
