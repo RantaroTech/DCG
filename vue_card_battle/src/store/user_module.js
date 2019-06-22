@@ -4,6 +4,9 @@ const userModule = {
   namespaced: true,
   state() {
     return {
+      user_status_data: {
+        hp: 3000,
+      },
       card_data: {
         rock: { name: 'rock', atack: 1000, is_show: true, is_choice: false },
         scissors: {
@@ -17,6 +20,9 @@ const userModule = {
     }
   },
   mutations: {
+    changeHp: function (state, num) {
+      state.user_status_data.hp -= num;
+    },
     resetUserCard: function (state) {
       state.card_data.rock.is_choice = false;
       state.card_data.scissors.is_choice = false;
@@ -46,6 +52,9 @@ const userModule = {
     },
   },
   actions: {
+    setChangeHp: function (state, num) {
+      this.commit('userModule/changeHp', num)
+    },
     roundEndCard: function () {
       this.commit('userModule/resetUserCard', null, { root: true })
     },

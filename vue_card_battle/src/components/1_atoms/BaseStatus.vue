@@ -1,16 +1,17 @@
 <template>
   <div class="box">
     <!-- HP -->
-    <div class="hp">hp:1000</div>
-    <!-- AP -->
-    <div class="ap">ap:220</div>
+    <div class="hp">HP:{{this.hp}}</div>
     <slot/>
   </div>
 </template>
 
 <script>
 export default {
-  components: {}
+  components: {},
+  props: {
+    hp: Number
+  }
 };
 </script>
 

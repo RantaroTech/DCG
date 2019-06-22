@@ -2,7 +2,12 @@
   <div id="wrapper">
     <div id="base_area">
       <!-- 対戦相手サイド -->
-      <BaseStatus style="position: absolute;top: 10px;right: 10px;background:#ff3e3e;">
+      <BaseStatus
+        :hp="enemyModule.user_status_data.hp"
+        style="position: absolute;top: 10px;right: 10px;background:#ff3e3e;"
+      >
+        <div v-if="enemyModule.user_status_data.hp > 0">{{enemyModule.user_status_data.hp}}</div>
+        <div v-if="enemyModule.user_status_data.hp <= 0">0</div>
         <div v-if="this.enemy_choice_card_type ==='rock'">✊</div>
         <div v-if="this.enemy_choice_card_type ==='scissors'">✌️</div>
         <div v-if="this.enemy_choice_card_type ==='paper'">🖐</div>
@@ -45,7 +50,10 @@
       </div>
 
       <!-- 自分サイド -->
-      <BaseStatus style="position: absolute;bottom: 10px;left: 10px;"></BaseStatus>
+      <BaseStatus
+        :hp="userModule.user_status_data.hp"
+        style="position: absolute;bottom: 10px;left: 10px;"
+      >{{userModule.user_status_data.hp}}</BaseStatus>
       <Character :character_id="1" style="position: absolute;bottom: 0;right: 0;">
         <div class="serect_text red" v-show="userModule.card_data.rock.is_choice">グー✊を選択</div>
         <div class="serect_text green" v-show="userModule.card_data.scissors.is_choice">チョキ✌️を選択</div>
@@ -70,7 +78,7 @@ export default {
     store
   },
   computed: {
-    ...mapState(["userModule"])
+    ...mapState(["userModule", "enemyModule"])
   },
   data() {
     return {
@@ -88,51 +96,64 @@ export default {
     randamChoice: function() {
       const ran = Math.random();
       if (ran <= 1 / 3) {
-        console.info("これはrock");
         this.enemy_choice_card_type = "rock";
       } else if (2 / 3 > ran > 1 / 3) {
-        console.info("これはscissors");
         this.enemy_choice_card_type = "scissors";
       } else if (ran >= 2 / 3) {
-        console.info("これはpaper");
         this.enemy_choice_card_type = "paper";
       }
-      console.info(ran);
-      console.info(this.enemy_choice_card_type);
     },
     choiceRock: function() {
-      console.info("ユーザーはグーを選んだ");
       this.$nextTick(() => {
         if (this.enemy_choice_card_type === "rock") {
-          console.info("あいこ");
+          this.$store.dispatch("userModule/setChangeHp", 300);
+          this.$store.dispatch("enemyModule/setChangeHp", 300);
         } else if (this.enemy_choice_card_type === "scissors") {
-          console.info("勝ち");
+          this.$store.dispatch(
+            "enemyModule/setChangeHp",
+            this.userModule.card_data.rock.atack
+          );
         } else if (this.enemy_choice_card_type === "paper") {
-          console.info("負け");
+          this.$store.dispatch(
+            "userModule/setChangeHp",
+            this.enemyModule.card_data.paper.atack
+          );
         }
       });
     },
     choiceScissors: function() {
-      console.info("ユーザーはチョキを選んだ");
       this.$nextTick(() => {
         if (this.enemy_choice_card_type === "rock") {
-          console.info("負け");
+          this.$store.dispatch(
+            "userModule/setChangeHp",
+            this.enemyModule.card_data.rock.atack
+          );
         } else if (this.enemy_choice_card_type === "scissors") {
-          console.info("あいこ");
+          this.$store.dispatch("userModule/setChangeHp", 300);
+          this.$store.dispatch("enemyModule/setChangeHp", 300);
         } else if (this.enemy_choice_card_type === "paper") {
-          console.info("勝ち");
+          this.$store.dispatch(
+            "enemyModule/setChangeHp",
+            this.userModule.card_data.scissors.atack
+          );
         }
       });
     },
     choicePaper: function() {
-      console.info("ユーザーはパーを選んだ");
       this.$nextTick(() => {
         if (this.enemy_choice_card_type === "rock") {
-          console.info("勝ち");
+          this.$store.dispatch(
+            "enemyModule/setChangeHp",
+            this.userModule.card_data.paper.atack
+          );
         } else if (this.enemy_choice_card_type === "scissors") {
-          console.info("負け");
+          this.$store.dispatch(
+            "userModule/setChangeHp",
+            this.enemyModule.card_data.scissors.atack
+          );
         } else if (this.enemy_choice_card_type === "paper") {
-          console.info("あいこ");
+          this.$store.dispatch("userModule/setChangeHp", 300);
+          this.$store.dispatch("enemyModule/setChangeHp", 300);
         }
       });
     },
@@ -171,7 +192,6 @@ export default {
 #wrapper:before {
   content: "";
   display: block;
-  /* margin-top: -2%; */
   padding-top: 178%; /* 4:3の比率の場合 100% / 4 *3 1136/640 = 1.78 */
   background-image: url("../../../assets/bg.jpg");
   background-size: 120%;
