@@ -46,7 +46,7 @@
 <script>
 import BaseStatus from "@/components/1_atoms/BaseStatus";
 import Character from "@/components/1_atoms/Character";
-import Card from "@/components/1_atoms/Card";
+import Card from "@/components/2_molecules/card";
 import store from "@/store/store";
 
 export default {
@@ -121,6 +121,7 @@ export default {
 #wrapper:before {
   content: "";
   display: block;
+  /* margin-top: -2%; */
   padding-top: 178%; /* 4:3の比率の場合 100% / 4 *3 1136/640 = 1.78 */
   background-image: url("../../../assets/bg.jpg");
   background-size: 120%;

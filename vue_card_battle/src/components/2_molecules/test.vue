@@ -4,17 +4,7 @@
 
 <script>
 export default {
-  data() {
-    return {
-      age: "",
-      address: ""
-    };
-  },
-  methods: {
-    check() {
-      alert("Your age is " + this.age + "\nYour address is " + this.address);
-    }
-  }
+  methods: {}
 };
 </script>
 

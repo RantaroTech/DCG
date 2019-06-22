@@ -9,8 +9,7 @@
 
 <script>
 export default {
-  components: {},
-  data() {}
+  components: {}
 };
 </script>
 

@@ -17,7 +17,6 @@
 <script>
 export default {
   components: {},
-  data() {},
   props: {
     character_id: {
       type: Number,
@@ -32,7 +31,7 @@ export default {
     //   return test;
     // }
   }
-}
+};
 </script>
 
 <style scoped>

@@ -5,8 +5,7 @@
       <img class="card_img" v-if="card_data.name==='rock'" src="../../../assets/rock.png">
     </div>
     <div class="icon_box" v-if="card_data.name==='rock'">
-      <div class="icon"></div>
-      <div class="mark">✊</div>
+      <cardIcon class="mark" :catd_type="card_data.name"></cardIcon>
     </div>
     <!-- チョキ -->
     <div class="img_box" v-if="card_data.name==='scissors'">
@@ -14,16 +13,14 @@
     </div>
 
     <div class="icon_box" v-if="card_data.name==='scissors'">
-      <div class="icon"></div>
-      <div class="mark">✌️</div>
+      <cardIcon class="mark" :catd_type="card_data.name"></cardIcon>
     </div>
     <!-- パー -->
     <div class="img_box" v-if="card_data.name==='paper'">
       <img class="card_img" src="../../../assets/paper.png">
     </div>
     <div class="icon_box" v-if="card_data.name==='paper'">
-      <div class="icon"></div>
-      <div class="mark">🖐️</div>
+      <cardIcon class="mark" :catd_type="card_data.name"></cardIcon>
     </div>
     <slot/>
     <div class="atack_num">{{card_data.atack}}</div>
@@ -31,9 +28,11 @@
 </template>
 
 <script>
+import cardIcon from "@/components/1_atoms/cardIcon";
 export default {
-  components: {},
-  data() {},
+  components: {
+    cardIcon
+  },
   props: {
     card_data: {
       name: { type: String, default: null },
@@ -96,56 +95,6 @@ export default {
   position: absolute;
   top: -22px;
   left: -13px;
-}
-
-.icon {
-  margin: 0 auto;
-  width: 50px;
-  height: 30px;
-  display: block;
-  position: fixed;
-  margin-left: -15px;
-  margin-top: -15px;
-  background: #1fbace;
-  transition: all 0.2s linear;
-}
-
-.icon span {
-  width: 100%;
-  height: 90px;
-  line-height: 90px;
-  color: #000;
-  text-align: center;
-  display: block;
-  position: relative;
-  z-index: 1;
-}
-
-.icon:before,
-.icon:after {
-  content: "";
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  background: #1fbace;
-  transition: all 0.2s linear;
-  z-index: 0;
-}
-
-.icon:before {
-  transform: rotate(60deg);
-}
-
-.icon:after {
-  transform: rotate(-60deg);
-}
-
-.icon:hover,
-.icon:hover:before,
-.icon:hover:after {
-  background: #bbb;
 }
 
 /* クラスをバインドして切り替え */
