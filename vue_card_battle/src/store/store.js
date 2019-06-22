@@ -6,11 +6,8 @@ import enemyModule from './enemy_module'
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
-  state: {
-    test: 'test'
-  },
-  getters: {
-  },
+  state: {},
+  getters: {},
   mutations: {},
   actions: {},
   modules: {

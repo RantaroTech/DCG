@@ -2,7 +2,11 @@
   <div id="wrapper">
     <div id="base_area">
       <!-- 対戦相手サイド -->
-      <BaseStatus style="position: absolute;top: 10px;right: 10px;background:#ff3e3e;"></BaseStatus>
+      <BaseStatus style="position: absolute;top: 10px;right: 10px;background:#ff3e3e;">
+        <div v-if="this.enemy_choice_card_type ==='rock'">✊</div>
+        <div v-if="this.enemy_choice_card_type ==='scissors'">✌️</div>
+        <div v-if="this.enemy_choice_card_type ==='paper'">🖐</div>
+      </BaseStatus>
       <Character :character_id="2" style="position: absolute;top: 0;left: 0;"></Character>
 
       <div class="janken_area">
@@ -70,41 +74,88 @@ export default {
   },
   data() {
     return {
-      card_type: ["rock", "scissors", "paper"]
+      card_type: ["rock", "scissors", "paper"],
+      enemy_choice_card_type: null
     };
   },
   methods: {
     tapCard: function(type) {
       console.info(this.$store);
-      console.info(store);
       this.setShowCard(type);
       this.choiceCard(type);
+      this.randamChoice();
+    },
+    randamChoice: function() {
+      const ran = Math.random();
+      if (ran <= 1 / 3) {
+        console.info("これはrock");
+        this.enemy_choice_card_type = "rock";
+      } else if (2 / 3 > ran > 1 / 3) {
+        console.info("これはscissors");
+        this.enemy_choice_card_type = "scissors";
+      } else if (ran >= 2 / 3) {
+        console.info("これはpaper");
+        this.enemy_choice_card_type = "paper";
+      }
+      console.info(ran);
+      console.info(this.enemy_choice_card_type);
+    },
+    choiceRock: function() {
+      console.info("ユーザーはグーを選んだ");
+      this.$nextTick(() => {
+        if (this.enemy_choice_card_type === "rock") {
+          console.info("あいこ");
+        } else if (this.enemy_choice_card_type === "scissors") {
+          console.info("勝ち");
+        } else if (this.enemy_choice_card_type === "paper") {
+          console.info("負け");
+        }
+      });
+    },
+    choiceScissors: function() {
+      console.info("ユーザーはチョキを選んだ");
+      this.$nextTick(() => {
+        if (this.enemy_choice_card_type === "rock") {
+          console.info("負け");
+        } else if (this.enemy_choice_card_type === "scissors") {
+          console.info("あいこ");
+        } else if (this.enemy_choice_card_type === "paper") {
+          console.info("勝ち");
+        }
+      });
+    },
+    choicePaper: function() {
+      console.info("ユーザーはパーを選んだ");
+      this.$nextTick(() => {
+        if (this.enemy_choice_card_type === "rock") {
+          console.info("勝ち");
+        } else if (this.enemy_choice_card_type === "scissors") {
+          console.info("負け");
+        } else if (this.enemy_choice_card_type === "paper") {
+          console.info("あいこ");
+        }
+      });
     },
     choiceCard: function(type) {
       if (type === "rock") {
-        console.info("グーだ！");
         this.$store.dispatch("userModule/setChoiceRock");
-      }
-      if (type === "scissors") {
-        console.info("チョキだ！");
+        this.choiceRock();
+      } else if (type === "scissors") {
         this.$store.dispatch("userModule/setChoiceScissors");
-      }
-      if (type === "paper") {
-        console.info("パーだ！");
+        this.choiceScissors();
+      } else if (type === "paper") {
         this.$store.dispatch("userModule/setChoicePaper");
+        this.choicePaper();
       }
     },
     setShowCard: function(type) {
       if (type !== "rock") {
-        console.info("グーじゃない");
         this.$store.dispatch("userModule/setHideRock");
       }
       if (type !== "scissors") {
-        console.info("チョキじゃない");
         this.$store.dispatch("userModule/setHideScissors");
       }
       if (type !== "paper") {
-        console.info("パーじゃない");
         this.$store.dispatch("userModule/setHidePaper");
       }
     }
@@ -157,16 +208,8 @@ export default {
   0% {
     transform: scale(1);
   }
-  10% {
-    transform: scale(1.2);
-  }
-  99% {
-    transform: scale(1.2);
-  }
   100% {
     transform: scale(1.2);
-    top: 210px;
-    left: 120px;
   }
 }
 
@@ -204,11 +247,11 @@ export default {
   left: 110px;
 }
 .card .rock_choice {
-  -webkit-animation: ImgAnime 1s linear 0s;
-  -moz-animation: ImgAnime 1s linear 0s;
-  -o-animation: ImgAnime 1s linear 0s;
-  -ms-animation: ImgAnime 1s linear 0s;
-  animation: ImgAnime 1s linear 0s;
+  -webkit-animation: ImgAnime 0.1s linear 0s;
+  -moz-animation: ImgAnime 0.1s linear 0s;
+  -o-animation: ImgAnime 0.1s linear 0s;
+  -ms-animation: ImgAnime 0.1s linear 0s;
+  animation: ImgAnime 0.1s linear 0s;
   animation-fill-mode: forwards;
 }
 .serect_text {

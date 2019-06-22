@@ -4,6 +4,7 @@
     <div class="hp">hp:1000</div>
     <!-- AP -->
     <div class="ap">ap:220</div>
+    <slot/>
   </div>
 </template>
 
