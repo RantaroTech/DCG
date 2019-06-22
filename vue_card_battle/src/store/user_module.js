@@ -8,7 +8,7 @@ const userModule = {
         hp: 3000,
       },
       card_data: {
-        rock: { name: 'rock', atack: 1000, is_show: true, is_choice: false },
+        rock: { name: 'rock', atack: 800, is_show: true, is_choice: false },
         scissors: {
           name: 'scissors',
           atack: 500,
@@ -57,6 +57,7 @@ const userModule = {
     },
     roundEndCard: function () {
       this.commit('userModule/resetUserCard', null, { root: true })
+
     },
     setChoiceRock() {
       this.commit('userModule/choiceRock', null, { root: true })

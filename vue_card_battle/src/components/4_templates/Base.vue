@@ -12,55 +12,66 @@
       </BaseStatus>
       <Character :character_id="2" style="position: absolute;top: 0;left: 0;"></Character>
 
-      <div v-if="this.show_enemy_card" class="enemy_card_pos">
         <Card
-          v-bind:card_data="enemyModule.card_data.rock"
-          v-if="this.enemy_choice_card_type == 'rock'"
-        ></Card>
-        <Card
-          v-bind:card_data="enemyModule.card_data.scissors"
-          v-if="this.enemy_choice_card_type == 'scissors'"
-        ></Card>
-        <Card
-          v-bind:card_data="enemyModule.card_data.paper"
-          v-if="this.enemy_choice_card_type == 'paper'"
-        ></Card>
-      </div>
       <div v-if="this.user_round_win" class="aiko_label">いいぞ！</div>
-      <div v-if="this.show_aiko_label" class="aiko_label">あいこだ</div>
+      <div v-if="this.show_aiko" class="aiko_label">あいこだ</div>
       <div v-if="this.user_round_lose" class="aiko_label">まずい…</div>
 
       <div class="janken_area">
+        <div v-if="this.show_enemy_card">
+          <Card
+            class="enemy_card_pos"
+            :class="{enemy_aiko:this.show_aiko, enemy_attack:this.user_round_lose,enemy_damage:this.user_round_win}"
+            v-bind:card_data="enemyModule.card_data.rock"
+            v-if="this.enemy_choice_card_type == 'rock'"
+          ></Card>
+          <Card
+            class="enemy_card_pos"
+            :class="{enemy_aiko:this.show_aiko, enemy_attack:this.user_round_lose,enemy_damage:this.user_round_win}"
+            v-bind:card_data="enemyModule.card_data.scissors"
+            v-if="this.enemy_choice_card_type == 'scissors'"
+          ></Card>
+          <Card
+            class="enemy_card_pos"
+            :class="{enemy_aiko:this.show_aiko, enemy_attack:this.user_round_lose,enemy_damage:this.user_round_win}"
+            v-bind:card_data="enemyModule.card_data.paper"
+            v-if="this.enemy_choice_card_type == 'paper'"
+          ></Card>
+        </div>
         <!-- 自分のじゃんけんカードエリア -->
-        <div class="user_card" @click="tapCard(userModule.card_data.rock.name)">
+        <div
+          v-if="userModule.card_data.rock.is_show"
+          class="user_card"
+          @click="tapCard(userModule.card_data.rock.name)"
+        >
           <Card
             v-bind:card_data="userModule.card_data.rock"
             v-show="userModule.card_data.rock.is_show"
-            :class="{rock_choice:userModule.card_data.rock.is_choice}"
+            :class="{user_attack:this.user_round_win,user_aiko:this.show_aiko,user_damage:this.user_round_lose}"
           ></Card>
         </div>
 
         <div
+          v-if="userModule.card_data.scissors.is_show"
           class="user_card"
-          v-if="userModule.card_data.scissors"
           @click="tapCard(userModule.card_data.scissors.name)"
         >
           <Card
             v-bind:card_data="userModule.card_data.scissors"
             v-show="userModule.card_data.scissors.is_show"
-            :class="{rock_choice:userModule.card_data.scissors.is_choice}"
+            :class="{user_attack:this.user_round_win,user_aiko:this.show_aiko,user_damage:this.user_round_lose}"
           ></Card>
         </div>
 
         <div
           class="user_card"
-          v-if="userModule.card_data.paper"
+          v-if="userModule.card_data.paper.is_show"
           @click="tapCard(userModule.card_data.paper.name)"
         >
           <Card
             v-bind:card_data="userModule.card_data.paper"
             v-show="userModule.card_data.paper.is_show"
-            :class="{rock_choice:userModule.card_data.paper.is_choice}"
+            :class="{user_attack:this.user_round_win,user_aiko:this.show_aiko,user_damage:this.user_round_lose}"
           ></Card>
         </div>
       </div>
@@ -102,10 +113,11 @@ export default {
     return {
       card_type: ["rock", "scissors", "paper"],
       enemy_choice_card_type: null,
+      is_user_choiced: false,
       show_enemy_card: false,
       user_round_win: false,
       user_round_lose: false,
-      show_aiko_label: false
+      show_aiko: false
     };
   },
   methods: {
@@ -116,6 +128,10 @@ export default {
       return hp;
     },
     tapCard: function(type) {
+      if (this.is_user_choiced) {
+        return;
+      }
+      this.is_user_choiced = true;
       console.info(this.$store);
       this.setShowCard(type);
       this.choiceCard(type);
@@ -136,7 +152,7 @@ export default {
     choiceRock: function() {
       this.$nextTick(() => {
         if (this.enemy_choice_card_type === "rock") {
-          this.show_aiko_label = true;
+          this.show_aiko = true;
           this.$store.dispatch("userModule/setChangeHp", 300);
           this.$store.dispatch("enemyModule/setChangeHp", 300);
         } else if (this.enemy_choice_card_type === "scissors") {
@@ -163,7 +179,7 @@ export default {
             this.enemyModule.card_data.rock.atack
           );
         } else if (this.enemy_choice_card_type === "scissors") {
-          this.show_aiko_label = true;
+          this.show_aiko = true;
           this.$store.dispatch("userModule/setChangeHp", 300);
           this.$store.dispatch("enemyModule/setChangeHp", 300);
         } else if (this.enemy_choice_card_type === "paper") {
@@ -190,7 +206,7 @@ export default {
             this.enemyModule.card_data.scissors.atack
           );
         } else if (this.enemy_choice_card_type === "paper") {
-          this.show_aiko_label = true;
+          this.show_aiko = true;
           this.$store.dispatch("userModule/setChangeHp", 300);
           this.$store.dispatch("enemyModule/setChangeHp", 300);
         }
@@ -220,14 +236,16 @@ export default {
       }
     },
     roundReset: function() {
-      setTimeout(this.allReseet, 3000);
+      this.countDown = setTimeout(this.allReseet, 2000);
     },
     allReseet: function() {
       this.enemy_choice_card_type = null;
       this.show_enemy_card = false;
       this.user_round_win = false;
       this.user_round_lose = false;
-      this.show_aiko_label = false;
+      this.show_aiko = false;
+      this.is_user_choiced = false;
+      clearInterval(this.countDown);
       this.$store.dispatch("userModule/roundEndCard");
     }
   }
@@ -262,13 +280,163 @@ export default {
   height: 390px;
   position: absolute;
   top: 125px;
-  /* background: #4caf5099; */
 }
 
 .enemy_card_pos {
   position: absolute;
-  top: 60px;
+  top: 0px;
   left: 110px;
+}
+
+.enemy_attack {
+  -webkit-animation: enemyAttackAnime 1s linear 0s;
+  -moz-animation: enemyAttackAnime 1s linear 0s;
+  -o-animation: enemyAttackAnime 1s linear 0s;
+  -ms-animation: enemyAttackAnime 1s linear 0s;
+  animation: enemyAttackAnime 1s linear 0s;
+  animation-fill-mode: forwards;
+}
+@keyframes enemyAttackAnime {
+  0% {
+    transform: scale(1);
+    top: 0px;
+    left: 110px;
+  }
+  70% {
+    transform: scale(1.3);
+    top: -50px;
+    left: 110px;
+  }
+  80% {
+    transform: scale(1.2);
+    top: 250px;
+    left: 110px;
+  }
+  100% {
+    transform: scale(1.2);
+    top: 0px;
+    left: 110px;
+  }
+}
+.enemy_damage {
+  -webkit-animation: enemyDamageAnime 1s linear 0s;
+  -moz-animation: enemyDamageAnime 1s linear 0s;
+  -o-animation: enemyDamageAnime 1s linear 0s;
+  -ms-animation: enemyDamageAnime 1s linear 0s;
+  animation: enemyDamageAnime 1s linear 0s;
+  animation-fill-mode: forwards;
+}
+@keyframes enemyDamageAnime {
+  0% {
+    transform: scale(1);
+    top: -20px;
+    left: 110px;
+  }
+  70% {
+    transform: scale(0.9);
+    top: -50px;
+    left: 110px;
+  }
+  80% {
+    transform: scale(0.7);
+    top: -40px;
+    left: 110px;
+  }
+  100% {
+    transform: scale(0.9);
+    top: -50px;
+    left: 110px;
+  }
+}
+.user_damage {
+  -webkit-animation: userDamageAnime 1s linear 0s;
+  -moz-animation: userDamageAnime 1s linear 0s;
+  -o-animation: userDamageAnime 1s linear 0s;
+  -ms-animation: userDamageAnime 1s linear 0s;
+  animation: userDamageAnime 1s linear 0s;
+  animation-fill-mode: forwards;
+}
+@keyframes userDamageAnime {
+  0% {
+    transform: scale(1);
+    top: 200px;
+    left: 110px;
+  }
+  70% {
+    transform: scale(0.9);
+    top: 280px;
+    left: 110px;
+  }
+  80% {
+    transform: scale(0.7);
+    top: 270px;
+    left: 110px;
+  }
+  100% {
+    transform: scale(0.9);
+    top: 280px;
+    left: 110px;
+  }
+}
+.user_aiko {
+  -webkit-animation: userAikoAnime 1s linear 0s;
+  -moz-animation: userAikoAnime 1s linear 0s;
+  -o-animation: userAikoAnime 1s linear 0s;
+  -ms-animation: userAikoAnime 1s linear 0s;
+  animation: userAikoAnime 1s linear 0s;
+  animation-fill-mode: forwards;
+}
+@keyframes userAikoAnime {
+  0% {
+    transform: scale(1);
+    top: 200px;
+    left: 110px;
+  }
+  70% {
+    transform: scale(1.3);
+    top: 250px;
+    left: 110px;
+  }
+  80% {
+    transform: scale(1.2);
+    top: 100px;
+    left: 110px;
+  }
+  100% {
+    transform: scale(1.2);
+    top: 250px;
+    left: 110px;
+  }
+}
+.enemy_aiko {
+  -webkit-animation: enemyAikoAnime 1s linear 0s;
+  -moz-animation: enemyAikoAnime 1s linear 0s;
+  -o-animation: enemyAikoAnime 1s linear 0s;
+  -ms-animation: enemyAikoAnime 1s linear 0s;
+  animation: enemyAikoAnime 1s linear 0s;
+  animation-fill-mode: forwards;
+}
+@keyframes enemyAikoAnime {
+  0% {
+    transform: scale(1);
+    top: 0px;
+    left: 110px;
+  }
+  70% {
+    transform: scale(1.3);
+    top: -20px;
+    left: 110px;
+  }
+  80% {
+    transform: scale(1.2);
+    top: 70px;
+    left: 110px;
+  }
+  100% {
+    transform: scale(1.2);
+    top: 0px;
+    left: 110px;
+  }
 }
 .red {
   background: red;
@@ -280,10 +448,20 @@ export default {
   background: blue;
 }
 
-@keyframes ImgAnime {
+@keyframes userAttackAnime {
   0% {
     transform: scale(1);
     top: 200px;
+    left: 110px;
+  }
+  70% {
+    transform: scale(1.3);
+    top: 300px;
+    left: 110px;
+  }
+  80% {
+    transform: scale(1.2);
+    top: 0px;
     left: 110px;
   }
   100% {
@@ -293,31 +471,27 @@ export default {
   }
 }
 
-/* 「RightToLeft」の動作内容 */
 @keyframes RightToLeft {
   0% {
-    opacity: 0; /* 透明 */
-    transform: translateX(-200px); /* X軸方向に50px */
+    opacity: 0;
+    transform: translateX(-200px);
   }
   20% {
-    opacity: 1; /* 不透明 */
+    opacity: 1;
     transform: translateX(0);
   }
   90% {
-    opacity: 1; /* 不透明 */
+    opacity: 1;
     transform: translateX(0);
   }
   100% {
-    opacity: 0; /* 不透明 */
-    /* transform: translateX(0); */
+    opacity: 0;
   }
 }
-
-/* 「RightToLeft」を適用する箇所 */
 .serect_text {
-  animation-duration: 2s; /* アニメーション時間 */
+  animation-duration: 2s;
   animation-timing-function: ease-out;
-  animation-name: RightToLeft; /* アニメーション名 */
+  animation-name: RightToLeft;
   animation-fill-mode: forwards;
 }
 
@@ -326,13 +500,32 @@ export default {
   top: 30px;
   left: 110px;
 }
-.user_card .rock_choice {
-  -webkit-animation: ImgAnime 0.1s linear 0s;
-  -moz-animation: ImgAnime 0.1s linear 0s;
-  -o-animation: ImgAnime 0.1s linear 0s;
-  -ms-animation: ImgAnime 0.1s linear 0s;
-  animation: ImgAnime 0.1s linear 0s;
+.user_card .user_attack {
+  -webkit-animation: userAttackAnime 1s linear 0s;
+  -moz-animation: userAttackAnime 1s linear 0s;
+  -o-animation: userAttackAnime 1s linear 0s;
+  -ms-animation: userAttackAnime 1s linear 0s;
+  animation: userAttackAnime 1s linear 0s;
   animation-fill-mode: forwards;
+}
+.user_card {
+  animation-name: fade_in;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-out;
+  animation-delay: 0s;
+  /* animation-iteration-count: 1; */
+  animation-direction: normal;
+  animation-fill-mode: forwards;
+}
+@keyframes fade_in {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
 }
 .serect_text {
   width: 220px;
