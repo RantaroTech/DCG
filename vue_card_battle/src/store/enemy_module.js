@@ -4,7 +4,16 @@ const userModule = {
   namespaced: true,
   state() {
     return {
-      test: 'user_test'
+      card_data: {
+        rock: { name: 'rock', atack: 1000, is_show: true, is_choice: false },
+        scissors: {
+          name: 'scissors',
+          atack: 500,
+          is_show: true,
+          is_choice: false
+        },
+        paper: { name: 'paper', atack: 300, is_show: true, is_choice: false }
+      }
     }
   },
   actions: {},

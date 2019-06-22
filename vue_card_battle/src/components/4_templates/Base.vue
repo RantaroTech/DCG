@@ -7,27 +7,35 @@
 
       <div class="janken_area">
         <!-- 自分のじゃんけんカードエリア -->
-        <div class="card" @click="tapCard(card_data.rock.name)">
+        <div class="card" @click="tapCard(userModule.card_data.rock.name)">
           <Card
-            v-bind:card_data="this.card_data.rock"
-            v-show="this.card_data.rock.is_show"
-            :class="{rock_choice:this.card_data.rock.is_choice}"
+            v-bind:card_data="userModule.card_data.rock"
+            v-show="userModule.card_data.rock.is_show"
+            :class="{rock_choice:userModule.card_data.rock.is_choice}"
           ></Card>
         </div>
 
-        <div class="card" v-if="this.card_data.scissors" @click="tapCard(card_data.scissors.name)">
+        <div
+          class="card"
+          v-if="userModule.card_data.scissors"
+          @click="tapCard(userModule.card_data.scissors.name)"
+        >
           <Card
-            v-bind:card_data="this.card_data.scissors"
-            v-show="this.card_data.scissors.is_show"
-            :class="{rock_choice:this.card_data.scissors.is_choice}"
+            v-bind:card_data="userModule.card_data.scissors"
+            v-show="userModule.card_data.scissors.is_show"
+            :class="{rock_choice:userModule.card_data.scissors.is_choice}"
           ></Card>
         </div>
 
-        <div class="card" v-if="this.card_data.paper" @click="tapCard(card_data.paper.name)">
+        <div
+          class="card"
+          v-if="userModule.card_data.paper"
+          @click="tapCard(userModule.card_data.paper.name)"
+        >
           <Card
-            v-bind:card_data="this.card_data.paper"
-            v-show="this.card_data.paper.is_show"
-            :class="{rock_choice:this.card_data.paper.is_choice}"
+            v-bind:card_data="userModule.card_data.paper"
+            v-show="userModule.card_data.paper.is_show"
+            :class="{rock_choice:userModule.card_data.paper.is_choice}"
           ></Card>
         </div>
       </div>
@@ -35,9 +43,9 @@
       <!-- 自分サイド -->
       <BaseStatus style="position: absolute;bottom: 10px;left: 10px;"></BaseStatus>
       <Character :character_id="1" style="position: absolute;bottom: 0;right: 0;">
-        <div class="serect_text red" v-show="this.card_data.rock.is_choice">グー✊を選択</div>
-        <div class="serect_text green" v-show="this.card_data.scissors.is_choice">チョキ✌️を選択</div>
-        <div class="serect_text yellow" v-show="this.card_data.paper.is_choice">パー✋を選択</div>
+        <div class="serect_text red" v-show="userModule.card_data.rock.is_choice">グー✊を選択</div>
+        <div class="serect_text green" v-show="userModule.card_data.scissors.is_choice">チョキ✌️を選択</div>
+        <div class="serect_text yellow" v-show="userModule.card_data.paper.is_choice">パー✋を選択</div>
       </Character>
     </div>
   </div>
@@ -48,6 +56,7 @@ import BaseStatus from "@/components/1_atoms/BaseStatus";
 import Character from "@/components/1_atoms/Character";
 import Card from "@/components/2_molecules/card";
 import store from "@/store/store";
+import { mapState } from "vuex";
 
 export default {
   components: {
@@ -56,57 +65,47 @@ export default {
     Card,
     store
   },
+  computed: {
+    ...mapState(["userModule"])
+  },
   data() {
     return {
-      card_data: {
-        rock: { name: "rock", atack: 1000, is_show: true, is_choice: false },
-        scissors: {
-          name: "scissors",
-          atack: 500,
-          is_show: true,
-          is_choice: false
-        },
-        paper: { name: "paper", atack: 300, is_show: true, is_choice: false }
-      },
       card_type: ["rock", "scissors", "paper"]
     };
   },
   methods: {
     tapCard: function(type) {
       console.info(this.$store);
-      console.info(this.$store.state);
+      console.info(store);
       this.setShowCard(type);
       this.choiceCard(type);
     },
     choiceCard: function(type) {
       if (type === "rock") {
         console.info("グーだ！");
-        this.card_data.rock.is_choice = true;
+        this.$store.dispatch("userModule/setChoiceRock");
       }
       if (type === "scissors") {
         console.info("チョキだ！");
-        this.card_data.scissors.is_choice = true;
+        this.$store.dispatch("userModule/setChoiceScissors");
       }
       if (type === "paper") {
         console.info("パーだ！");
-        this.card_data.paper.is_choice = true;
+        this.$store.dispatch("userModule/setChoicePaper");
       }
     },
     setShowCard: function(type) {
       if (type !== "rock") {
         console.info("グーじゃない");
-        this.card_data.rock.is_show = false;
-        this.card_data.rock.is_choice = false;
+        this.$store.dispatch("userModule/setHideRock");
       }
       if (type !== "scissors") {
         console.info("チョキじゃない");
-        this.card_data.scissors.is_show = false;
-        this.card_data.scissors.is_choice = false;
+        this.$store.dispatch("userModule/setHideScissors");
       }
       if (type !== "paper") {
         console.info("パーじゃない");
-        this.card_data.paper.is_show = false;
-        this.card_data.paper.is_choice = false;
+        this.$store.dispatch("userModule/setHidePaper");
       }
     }
   }
