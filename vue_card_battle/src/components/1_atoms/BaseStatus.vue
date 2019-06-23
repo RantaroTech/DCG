@@ -18,7 +18,12 @@ export default {
 <style scoped>
 .box {
   width: 200px;
-  height: 70px;
+  height: 50px;
   background: #3d92d6;
+}
+.hp {
+  font-size: 36px;
+  text-align: center;
+  font-family: monospace;
 }
 </style>

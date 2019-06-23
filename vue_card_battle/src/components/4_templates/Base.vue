@@ -4,20 +4,14 @@
       <!-- 対戦相手サイド -->
       <BaseStatus
         :hp="setStateHp(enemyModule.user_status_data.hp)"
-        style="position: absolute;top: 10px;right: 10px;background:#ff3e3e;"
-      >
-        <div v-if="this.enemy_choice_card_type ==='rock'">✊</div>
-        <div v-if="this.enemy_choice_card_type ==='scissors'">✌️</div>
-        <div v-if="this.enemy_choice_card_type ==='paper'">🖐</div>
-      </BaseStatus>
+        style="position: absolute;top: 10px;left: 165px;background:#ff3e3e;"
+      ></BaseStatus>
       <Character :character_id="2" style="position: absolute;top: 0;left: 0;"></Character>
 
-        <Card
-      <div v-if="this.user_round_win" class="aiko_label">いいぞ！</div>
-      <div v-if="this.show_aiko" class="aiko_label">あいこだ</div>
-      <div v-if="this.user_round_lose" class="aiko_label">まずい…</div>
-
       <div class="janken_area">
+        <div v-if="this.user_round_win" class="aiko_label">いいぞ！</div>
+        <div v-if="this.show_aiko" class="aiko_label">あいこだ</div>
+        <div v-if="this.user_round_lose" class="aiko_label">まずい…</div>
         <div v-if="this.show_enemy_card">
           <Card
             class="enemy_card_pos"
@@ -80,9 +74,9 @@
       <BaseStatus
         :hp="setStateHp(userModule.user_status_data.hp)"
         style="position: absolute;bottom: 10px;left: 10px;"
-      >{{this.enemy_choice_card_type}}</BaseStatus>
+      ></BaseStatus>
       <div @click="allReseet()">
-        <Character :character_id="1" style="position: absolute;bottom: 0;right: 0;">
+        <Character :character_id="1" style="position: absolute;bottom: 0;left: 245px;">
           <div class="serect_text red" v-show="userModule.card_data.rock.is_choice">グー✊を選択</div>
           <div class="serect_text green" v-show="userModule.card_data.scissors.is_choice">チョキ✌️を選択</div>
           <div class="serect_text yellow" v-show="userModule.card_data.paper.is_choice">パー✋を選択</div>
@@ -98,6 +92,7 @@ import Character from "@/components/1_atoms/Character";
 import Card from "@/components/2_molecules/card";
 import store from "@/store/store";
 import { mapState } from "vuex";
+import Vue from "vue";
 
 export default {
   components: {
@@ -108,6 +103,14 @@ export default {
   },
   computed: {
     ...mapState(["userModule", "enemyModule"])
+  },
+  created() {
+    Vue.prototype.$EventBus = new Vue();
+    console.info(Vue.prototype.$EventBus);
+    Vue.prototype.$EventBus.$on("battleEnd", () => {
+      console.info("0になった");
+      this.$router.push("result");
+    });
   },
   data() {
     return {
@@ -123,6 +126,8 @@ export default {
   methods: {
     setStateHp: function(hp) {
       if (hp <= 0) {
+        Vue.prototype.$EventBus = new Vue();
+        Vue.prototype.$EventBus.$emit("battleEnd");
         return 0;
       }
       return hp;
@@ -131,6 +136,7 @@ export default {
       if (this.is_user_choiced) {
         return;
       }
+      console.info(this.$EventBus);
       this.is_user_choiced = true;
       console.info(this.$store);
       this.setShowCard(type);
@@ -260,8 +266,8 @@ export default {
 #wrapper:before {
   content: "";
   display: block;
-  /* padding-top: 178%;  */
-  padding-top: 100vh; /* 4:3の比率の場合 100% / 4 *3 1136/640 = 1.78 */
+  padding-top: 178%;
+  /* padding-top: 100vh; 4:3の比率の場合 100% / 4 *3 1136/640 = 1.78 */
   background-image: url("../../../assets/bg.jpg");
   background-size: 120%;
   background-repeat: no-repeat;
@@ -489,7 +495,7 @@ export default {
   }
 }
 .serect_text {
-  animation-duration: 2s;
+  animation-duration: 1s;
   animation-timing-function: ease-out;
   animation-name: RightToLeft;
   animation-fill-mode: forwards;
@@ -534,7 +540,7 @@ export default {
   font-size: 28px;
   font-weight: bold;
   position: absolute;
-  bottom: 0;
+  bottom: 120px;
   right: 0;
 }
 
