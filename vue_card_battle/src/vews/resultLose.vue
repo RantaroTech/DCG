@@ -1,6 +1,7 @@
 <template>
   <div>
     <div>リザルト画面</div>
+    <h1>残念、負けてしまった。。。</h1>
     <div class="btn" @click="goInGame()">また遊んでくれよな！！</div>
   </div>
 </template>

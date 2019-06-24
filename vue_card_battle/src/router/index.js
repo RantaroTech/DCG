@@ -3,7 +3,9 @@ import Router from 'vue-router'
 import InGame from '@/vews/InGame'
 import Top from '@/vews/top'
 import introduction from '@/vews/introduction'
-import Result from '@/vews/result'
+import ResultWin from '@/vews/resultWin'
+import ResultLose from '@/vews/resultWin'
+import ResultDraw from '@/vews/resultDraw'
 
 
 Vue.use(Router)
@@ -25,11 +27,22 @@ export default new Router({
       path: '/InGame',
       name: 'InGame',
       component: InGame
+    }
+    ,
+    {
+      path: '/ResultDraw',
+      name: 'ResultDraw',
+      component: ResultDraw
     },
     {
-      path: '/Result',
-      name: 'Result',
-      component: Result
+      path: '/ResultWin',
+      name: 'ResultWin',
+      component: ResultWin
     },
+    {
+      path: '/ResultLose',
+      name: 'ResultLose',
+      component: ResultLose
+    }
   ]
 })

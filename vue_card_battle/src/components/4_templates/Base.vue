@@ -104,14 +104,7 @@ export default {
   computed: {
     ...mapState(["userModule", "enemyModule"])
   },
-  created() {
-    Vue.prototype.$EventBus = new Vue();
-    console.info(Vue.prototype.$EventBus);
-    Vue.prototype.$EventBus.$on("battleEnd", () => {
-      console.info("0になった");
-      this.$router.push("result");
-    });
-  },
+  created() {},
   data() {
     return {
       card_type: ["rock", "scissors", "paper"],
@@ -126,8 +119,6 @@ export default {
   methods: {
     setStateHp: function(hp) {
       if (hp <= 0) {
-        Vue.prototype.$EventBus = new Vue();
-        Vue.prototype.$EventBus.$emit("battleEnd");
         return 0;
       }
       return hp;
@@ -253,6 +244,18 @@ export default {
       this.is_user_choiced = false;
       clearInterval(this.countDown);
       this.$store.dispatch("userModule/roundEndCard");
+      if (
+        this.enemyModule.user_status_data.hp <= 0 &&
+        this.userModule.user_status_data.hp <= 0
+      ) {
+        this.$router.push("resultDraw");
+      }
+      if (this.enemyModule.user_status_data.hp <= 0) {
+        this.$router.push("resultWin");
+      }
+      if (this.userModule.user_status_data.hp <= 0) {
+        this.$router.push("resultLose");
+      }
     }
   }
 };
@@ -344,8 +347,8 @@ export default {
     left: 110px;
   }
   80% {
-    transform: scale(0.7);
-    top: -40px;
+    transform: scale(0.8);
+    top: -50px;
     left: 110px;
   }
   100% {
@@ -375,7 +378,7 @@ export default {
   }
   80% {
     transform: scale(0.7);
-    top: 270px;
+    top: 280px;
     left: 110px;
   }
   100% {
