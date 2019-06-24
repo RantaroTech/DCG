@@ -2,14 +2,18 @@
   <div class="card_content" :class="card_data.name">
     <!-- グー -->
     <div class="img_box">
-      <img class="card_img" v-if="card_data.name==='rock'" src="../../../assets/rock.png">
+      <img
+        class="card_img"
+        v-if="card_data.name==='rock'"
+        src="../../../assets/img/content/card/rock.png"
+      >
     </div>
     <div class="icon_box" v-if="card_data.name==='rock'">
       <cardIcon class="mark" :catd_type="card_data.name"></cardIcon>
     </div>
     <!-- チョキ -->
     <div class="img_box" v-if="card_data.name==='scissors'">
-      <img class="card_img" src="../../../assets/scissors.png">
+      <img class="card_img" src="../../../assets/img/content/card/scissors.png">
     </div>
 
     <div class="icon_box" v-if="card_data.name==='scissors'">
@@ -17,7 +21,7 @@
     </div>
     <!-- パー -->
     <div class="img_box" v-if="card_data.name==='paper'">
-      <img class="card_img" src="../../../assets/paper.png">
+      <img class="card_img" src="../../../assets/img/content/card/paper.png">
     </div>
     <div class="icon_box" v-if="card_data.name==='paper'">
       <cardIcon class="mark" :catd_type="card_data.name"></cardIcon>

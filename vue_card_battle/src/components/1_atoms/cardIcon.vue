@@ -1,9 +1,15 @@
 <template>
   <div class="icon_box">
     <div class="icon"></div>
-    <div class="mark" v-if="this.catd_type==='rock'">✊</div>
-    <div class="mark" v-if="this.catd_type==='scissors'">✌️</div>
-    <div class="mark" v-if="this.catd_type==='paper'">🖐</div>
+    <div class="mark" v-if="this.catd_type==='rock'">
+      <img class="icon_img" src="../../../assets/img/ui/rock.png">
+    </div>
+    <div class="mark" v-if="this.catd_type==='scissors'">
+      <img class="icon_img" src="../../../assets/img/ui/scissors.png">
+    </div>
+    <div class="mark" v-if="this.catd_type==='paper'">
+      <img class="icon_img" src="../../../assets/img/ui/paper.png">
+    </div>
   </div>
 </template>
 
@@ -18,11 +24,7 @@ export default {
   components: {},
   created() {},
   computed: {},
-  methods: {
-    setIcon: function(type) {
-      return "✊";
-    }
-  }
+  methods: {}
 };
 </script>
 
@@ -46,6 +48,13 @@ export default {
   margin-top: 16px;
   background: #1fbace;
   transition: all 0.2s linear;
+}
+.icon_img {
+  width: 35px;
+  height: 35px;
+  position: relative;
+  top: 12px;
+  left: -12px;
 }
 .icon span {
   width: 100%;

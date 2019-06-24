@@ -3,12 +3,12 @@
     <img
       v-if="this.character_id === 1"
       style="width: 120px;height: 120px;"
-      src="../../../assets/character1.png"
+      src="../../../assets/img/content/avater/character1.png"
     >
     <img
       v-if="this.character_id === 2"
       style="width: 120px;height: 120px;"
-      src="../../../assets/character2.png"
+      src="../../../assets/img/content/avater/character2.png"
     >
     <slot/>
   </div>

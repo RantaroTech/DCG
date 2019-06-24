@@ -77,9 +77,9 @@
       ></BaseStatus>
       <div @click="allReseet()">
         <Character :character_id="1" style="position: absolute;bottom: 0;left: 245px;">
-          <div class="serect_text red" v-show="userModule.card_data.rock.is_choice">グー✊を選択</div>
-          <div class="serect_text green" v-show="userModule.card_data.scissors.is_choice">チョキ✌️を選択</div>
-          <div class="serect_text yellow" v-show="userModule.card_data.paper.is_choice">パー✋を選択</div>
+          <div class="serect_text red" v-show="userModule.card_data.rock.is_choice">グーを選択</div>
+          <div class="serect_text green" v-show="userModule.card_data.scissors.is_choice">チョキを選択</div>
+          <div class="serect_text yellow" v-show="userModule.card_data.paper.is_choice">パーを選択</div>
         </Character>
       </div>
     </div>
@@ -271,7 +271,7 @@ export default {
   display: block;
   padding-top: 178%;
   /* padding-top: 100vh; 4:3の比率の場合 100% / 4 *3 1136/640 = 1.78 */
-  background-image: url("../../../assets/bg.jpg");
+  background-image: url("../../../assets/img/ui/bg.jpg");
   background-size: 120%;
   background-repeat: no-repeat;
 }
