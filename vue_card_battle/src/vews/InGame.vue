@@ -1,7 +1,6 @@
 <template>
   <div>
     <Base/>
-    <div class="btn" @click="goInGame()">リザルトへ</div>
   </div>
 </template>
 

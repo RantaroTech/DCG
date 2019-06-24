@@ -9,9 +9,6 @@
       <Character :character_id="2" style="position: absolute;top: 0;left: 0;"></Character>
 
       <div class="janken_area">
-        <div v-if="this.user_round_win" class="aiko_label">いいぞ！</div>
-        <div v-if="this.show_aiko" class="aiko_label">あいこだ</div>
-        <div v-if="this.user_round_lose" class="aiko_label">まずい…</div>
         <div v-if="this.show_enemy_card">
           <Card
             class="enemy_card_pos"
@@ -77,9 +74,15 @@
       ></BaseStatus>
       <div @click="allReseet()">
         <Character :character_id="1" style="position: absolute;bottom: 0;left: 245px;">
-          <div class="serect_text red" v-show="userModule.card_data.rock.is_choice">グーを選択</div>
-          <div class="serect_text green" v-show="userModule.card_data.scissors.is_choice">チョキを選択</div>
-          <div class="serect_text yellow" v-show="userModule.card_data.paper.is_choice">パーを選択</div>
+          <div v-if="this.user_round_win" class="serect_text_l_to_r aiko_label">いいぞ！</div>
+          <div v-if="this.show_aiko" class="serect_text_l_to_r aiko_label">あいこだ</div>
+          <div v-if="this.user_round_lose" class="serect_text_l_to_r aiko_label">まずい…</div>
+          <div class="serect_text_r_to_l red" v-show="userModule.card_data.rock.is_choice">グーを選択</div>
+          <div
+            class="serect_text_r_to_l green"
+            v-show="userModule.card_data.scissors.is_choice"
+          >チョキを選択</div>
+          <div class="serect_text_r_to_l yellow" v-show="userModule.card_data.paper.is_choice">パーを選択</div>
         </Character>
       </div>
     </div>
@@ -480,6 +483,23 @@ export default {
   }
 }
 
+@keyframes RightToRight {
+  0% {
+    opacity: 0;
+    transform: translateX(200px);
+  }
+  20% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  90% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+  }
+}
 @keyframes RightToLeft {
   0% {
     opacity: 0;
@@ -497,10 +517,23 @@ export default {
     opacity: 0;
   }
 }
-.serect_text {
+.serect_text_r_to_l {
   animation-duration: 1s;
   animation-timing-function: ease-out;
   animation-name: RightToLeft;
+  animation-fill-mode: forwards;
+}
+.serect_text_l_to_r {
+  animation-duration: 1s;
+  animation-timing-function: ease-out;
+  animation-name: RightToRight;
+  animation-fill-mode: forwards;
+}
+
+.serect_text_l_to_r {
+  animation-duration: 1s;
+  animation-timing-function: ease-out;
+  animation-name: RightToRight;
   animation-fill-mode: forwards;
 }
 
@@ -536,7 +569,7 @@ export default {
     transform: translate3d(0, 0, 0);
   }
 }
-.serect_text {
+.serect_text_r_to_l {
   width: 220px;
   border: solid 2px black;
   text-align: center;
@@ -561,7 +594,7 @@ export default {
 .aiko_label {
   position: absolute;
   top: 45%;
-  left: 30vw;
+  left: -40px;
   width: 40vw;
   text-align: center;
   font-size: 30px;
