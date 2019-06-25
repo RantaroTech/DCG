@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="ingame">
     <Base/>
   </div>
 </template>
@@ -27,6 +27,10 @@ export default {
 </script>
 
 <style scoped>
+#ingame{
+  width: 100%;
+  height: 100%;
+}
 .btn {
   position: absolute;
   top: 0;

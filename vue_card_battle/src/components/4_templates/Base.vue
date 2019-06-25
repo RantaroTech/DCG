@@ -74,15 +74,9 @@
       ></BaseStatus>
       <div @click="allReseet()">
         <Character :character_id="1" style="position: absolute;bottom: 0;left: 245px;">
-          <div v-if="this.user_round_win" class="serect_text_l_to_r aiko_label">いいぞ！</div>
-          <div v-if="this.show_aiko" class="serect_text_l_to_r aiko_label">あいこだ</div>
-          <div v-if="this.user_round_lose" class="serect_text_l_to_r aiko_label">まずい…</div>
-          <div class="serect_text_r_to_l red" v-show="userModule.card_data.rock.is_choice">グーを選択</div>
-          <div
-            class="serect_text_r_to_l green"
-            v-show="userModule.card_data.scissors.is_choice"
-          >チョキを選択</div>
-          <div class="serect_text_r_to_l yellow" v-show="userModule.card_data.paper.is_choice">パーを選択</div>
+          <div v-if="this.user_round_win" class="serect_text_r_to_l aiko_label">いいぞ！</div>
+          <div v-if="this.show_aiko" class="serect_text_r_to_l aiko_label">あいこだ</div>
+          <div v-if="this.user_round_lose" class="serect_text_r_to_l aiko_label">まずい…</div>
         </Character>
       </div>
     </div>
@@ -90,12 +84,12 @@
 </template>
 
 <script>
-import BaseStatus from '@/components/1_atoms/BaseStatus';
-import Character from '@/components/1_atoms/Character';
-import Card from '@/components/2_molecules/card';
-import store from '@/store/store';
-import { mapState } from 'vuex';
-import Vue from 'vue';
+import BaseStatus from '@/components/1_atoms/BaseStatus'
+import Character from '@/components/1_atoms/Character'
+import Card from '@/components/2_molecules/card'
+import store from '@/store/store'
+import { mapState } from 'vuex'
+import Vue from 'vue'
 
 export default {
   components: {
@@ -142,11 +136,11 @@ export default {
     randamChoice: function() {
       const ran = Math.random()
       if (ran <= 1 / 3) {
-        this.enemy_choice_card_type = 'rock';
+        this.enemy_choice_card_type = 'rock'
       } else if (2 / 3 > ran > 1 / 3) {
-        this.enemy_choice_card_type = 'scissors';
+        this.enemy_choice_card_type = 'scissors'
       } else if (ran >= 2 / 3) {
-        this.enemy_choice_card_type = 'paper';
+        this.enemy_choice_card_type = 'paper'
       }
     },
     choiceRock: function() {
@@ -268,15 +262,6 @@ export default {
 #wrapper {
   position: relative;
   height: 100%;
-}
-#wrapper:before {
-  /* content: "";
-  display: block;
-  padding-top: 178%; */
-  /* padding-top: 100vh; 4:3の比率の場合 100% / 4 *3 1136/640 = 1.78 */
-  /* background-image: url("../../../assets/img/ui/bg.jpg");
-  background-size: 120%;
-  background-repeat: no-repeat; */
 }
 
 #base_area {
@@ -555,7 +540,6 @@ export default {
   animation-duration: 0.3s;
   animation-timing-function: ease-out;
   animation-delay: 0s;
-  /* animation-iteration-count: 1; */
   animation-direction: normal;
   animation-fill-mode: forwards;
 }
@@ -571,12 +555,13 @@ export default {
 }
 .serect_text_r_to_l {
   width: 220px;
+  height: 50px;
   border: solid 2px black;
   text-align: center;
   font-size: 28px;
   font-weight: bold;
   position: absolute;
-  bottom: 120px;
+  bottom: 130px;
   right: 0;
 }
 
@@ -593,9 +578,7 @@ export default {
 }
 .aiko_label {
   position: absolute;
-  top: 45%;
-  left: -40px;
-  width: 40vw;
+  left: -80px;
   text-align: center;
   font-size: 30px;
   font-weight: bold;
