@@ -7,11 +7,47 @@
   <title>vue_card_battle</title>
 </head>
 
-<body style="margin: 0;">
-  <div id="app"></div>
-  <!-- built files will be auto injected -->
+<body style="margin: 0;padding: 0;">
+  <div id="game_window">
+    <div id="app"></div>
+  </div>
 </body>
 
 </html>
 <script>
+const windowWidth = window.innerWidth;
+const windowHeight = window.innerHeight;
+
+function setScreenSize() {
+  const element = document.getElementById("game_window");
+  if(windowWidth > windowHeight){
+    // 画面が横長だった時のアスペクト比設定
+    element.style.width = '56.2vh';
+    element.style.height = '100vh';
+  }
+  else{
+    // 画面が縦長だった時のアスペクト比設定
+    element.style.width = '100vw';
+    element.style.height = '178vw';
+  }
+}
+setScreenSize();
 </script>
+
+<style>
+  body{
+    width: 100%;
+    height: 100%;
+  }
+  #game_window{
+    max-width: 100vw;
+    max-height: 100vh;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+  }
+</style>

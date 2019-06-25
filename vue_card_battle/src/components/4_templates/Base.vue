@@ -90,12 +90,12 @@
 </template>
 
 <script>
-import BaseStatus from "@/components/1_atoms/BaseStatus";
-import Character from "@/components/1_atoms/Character";
-import Card from "@/components/2_molecules/card";
-import store from "@/store/store";
-import { mapState } from "vuex";
-import Vue from "vue";
+import BaseStatus from '@/components/1_atoms/BaseStatus';
+import Character from '@/components/1_atoms/Character';
+import Card from '@/components/2_molecules/card';
+import store from '@/store/store';
+import { mapState } from 'vuex';
+import Vue from 'vue';
 
 export default {
   components: {
@@ -105,163 +105,163 @@ export default {
     store
   },
   computed: {
-    ...mapState(["userModule", "enemyModule"])
+    ...mapState(['userModule', 'enemyModule'])
   },
   created() {},
   data() {
     return {
-      card_type: ["rock", "scissors", "paper"],
+      card_type: ['rock', 'scissors', 'paper'],
       enemy_choice_card_type: null,
       is_user_choiced: false,
       show_enemy_card: false,
       user_round_win: false,
       user_round_lose: false,
       show_aiko: false
-    };
+    }
   },
   methods: {
     setStateHp: function(hp) {
       if (hp <= 0) {
-        return 0;
+        return 0
       }
-      return hp;
+      return hp
     },
     tapCard: function(type) {
       if (this.is_user_choiced) {
-        return;
+        return
       }
-      console.info(this.$EventBus);
-      this.is_user_choiced = true;
-      console.info(this.$store);
-      this.setShowCard(type);
-      this.choiceCard(type);
-      this.randamChoice();
-      this.show_enemy_card = true;
-      this.roundReset();
+      console.info(this.$EventBus)
+      this.is_user_choiced = true
+      console.info(this.$store)
+      this.setShowCard(type)
+      this.choiceCard(type)
+      this.randamChoice()
+      this.show_enemy_card = true
+      this.roundReset()
     },
     randamChoice: function() {
-      const ran = Math.random();
+      const ran = Math.random()
       if (ran <= 1 / 3) {
-        this.enemy_choice_card_type = "rock";
+        this.enemy_choice_card_type = 'rock';
       } else if (2 / 3 > ran > 1 / 3) {
-        this.enemy_choice_card_type = "scissors";
+        this.enemy_choice_card_type = 'scissors';
       } else if (ran >= 2 / 3) {
-        this.enemy_choice_card_type = "paper";
+        this.enemy_choice_card_type = 'paper';
       }
     },
     choiceRock: function() {
       this.$nextTick(() => {
-        if (this.enemy_choice_card_type === "rock") {
-          this.show_aiko = true;
-          this.$store.dispatch("userModule/setChangeHp", 300);
-          this.$store.dispatch("enemyModule/setChangeHp", 300);
-        } else if (this.enemy_choice_card_type === "scissors") {
-          this.user_round_win = true;
+        if (this.enemy_choice_card_type === 'rock') {
+          this.show_aiko = true
+          this.$store.dispatch('userModule/setChangeHp', 300)
+          this.$store.dispatch('enemyModule/setChangeHp', 300)
+        } else if (this.enemy_choice_card_type === 'scissors') {
+          this.user_round_win = true
           this.$store.dispatch(
-            "enemyModule/setChangeHp",
+            'enemyModule/setChangeHp',
             this.userModule.card_data.rock.atack
-          );
-        } else if (this.enemy_choice_card_type === "paper") {
-          this.user_round_lose = true;
+          )
+        } else if (this.enemy_choice_card_type === 'paper') {
+          this.user_round_lose = true
           this.$store.dispatch(
-            "userModule/setChangeHp",
+            'userModule/setChangeHp',
             this.enemyModule.card_data.paper.atack
-          );
+          )
         }
-      });
+      })
     },
     choiceScissors: function() {
       this.$nextTick(() => {
-        if (this.enemy_choice_card_type === "rock") {
-          this.user_round_lose = true;
+        if (this.enemy_choice_card_type === 'rock') {
+          this.user_round_lose = true
           this.$store.dispatch(
-            "userModule/setChangeHp",
+            'userModule/setChangeHp',
             this.enemyModule.card_data.rock.atack
-          );
-        } else if (this.enemy_choice_card_type === "scissors") {
-          this.show_aiko = true;
-          this.$store.dispatch("userModule/setChangeHp", 300);
-          this.$store.dispatch("enemyModule/setChangeHp", 300);
-        } else if (this.enemy_choice_card_type === "paper") {
-          this.user_round_win = true;
+          )
+        } else if (this.enemy_choice_card_type === 'scissors') {
+          this.show_aiko = true
+          this.$store.dispatch('userModule/setChangeHp', 300)
+          this.$store.dispatch('enemyModule/setChangeHp', 300)
+        } else if (this.enemy_choice_card_type === 'paper') {
+          this.user_round_win = true
           this.$store.dispatch(
-            "enemyModule/setChangeHp",
+            'enemyModule/setChangeHp',
             this.userModule.card_data.scissors.atack
-          );
+          )
         }
-      });
+      })
     },
     choicePaper: function() {
       this.$nextTick(() => {
-        if (this.enemy_choice_card_type === "rock") {
-          this.user_round_win = true;
+        if (this.enemy_choice_card_type === 'rock') {
+          this.user_round_win = true
           this.$store.dispatch(
-            "enemyModule/setChangeHp",
+            'enemyModule/setChangeHp',
             this.userModule.card_data.paper.atack
-          );
-        } else if (this.enemy_choice_card_type === "scissors") {
-          this.user_round_lose = true;
+          )
+        } else if (this.enemy_choice_card_type === 'scissors') {
+          this.user_round_lose = true
           this.$store.dispatch(
-            "userModule/setChangeHp",
+            'userModule/setChangeHp',
             this.enemyModule.card_data.scissors.atack
-          );
-        } else if (this.enemy_choice_card_type === "paper") {
-          this.show_aiko = true;
-          this.$store.dispatch("userModule/setChangeHp", 300);
-          this.$store.dispatch("enemyModule/setChangeHp", 300);
+          )
+        } else if (this.enemy_choice_card_type === 'paper') {
+          this.show_aiko = true
+          this.$store.dispatch('userModule/setChangeHp', 300)
+          this.$store.dispatch('enemyModule/setChangeHp', 300)
         }
-      });
+      })
     },
     choiceCard: function(type) {
-      if (type === "rock") {
-        this.$store.dispatch("userModule/setChoiceRock");
-        this.choiceRock();
-      } else if (type === "scissors") {
-        this.$store.dispatch("userModule/setChoiceScissors");
-        this.choiceScissors();
-      } else if (type === "paper") {
-        this.$store.dispatch("userModule/setChoicePaper");
-        this.choicePaper();
+      if (type === 'rock') {
+        this.$store.dispatch('userModule/setChoiceRock')
+        this.choiceRock()
+      } else if (type === 'scissors') {
+        this.$store.dispatch('userModule/setChoiceScissors')
+        this.choiceScissors()
+      } else if (type === 'paper') {
+        this.$store.dispatch('userModule/setChoicePaper')
+        this.choicePaper()
       }
     },
     setShowCard: function(type) {
-      if (type !== "rock") {
-        this.$store.dispatch("userModule/setHideRock");
+      if (type !== 'rock') {
+        this.$store.dispatch('userModule/setHideRock')
       }
-      if (type !== "scissors") {
-        this.$store.dispatch("userModule/setHideScissors");
+      if (type !== 'scissors') {
+        this.$store.dispatch('userModule/setHideScissors')
       }
-      if (type !== "paper") {
-        this.$store.dispatch("userModule/setHidePaper");
+      if (type !== 'paper') {
+        this.$store.dispatch('userModule/setHidePaper')
       }
     },
     roundReset: function() {
-      this.countDown = setTimeout(this.allReseet, 2000);
+      this.countDown = setTimeout(this.allReseet, 2000)
     },
     allReseet: function() {
-      this.enemy_choice_card_type = null;
-      this.show_enemy_card = false;
-      this.user_round_win = false;
-      this.user_round_lose = false;
-      this.show_aiko = false;
-      this.is_user_choiced = false;
-      clearInterval(this.countDown);
-      this.$store.dispatch("userModule/roundEndCard");
+      this.enemy_choice_card_type = null
+      this.show_enemy_card = false
+      this.user_round_win = false
+      this.user_round_lose = false
+      this.show_aiko = false
+      this.is_user_choiced = false
+      clearInterval(this.countDown)
+      this.$store.dispatch('userModule/roundEndCard')
       if (
         this.enemyModule.user_status_data.hp <= 0 &&
         this.userModule.user_status_data.hp <= 0
       ) {
-        this.$router.push("resultDraw");
+        this.$router.push('resultDraw')
       }
       if (this.enemyModule.user_status_data.hp <= 0) {
-        this.$router.push("resultWin");
+        this.$router.push('resultWin')
       }
       if (this.userModule.user_status_data.hp <= 0) {
-        this.$router.push("resultLose");
+        this.$router.push('resultLose')
       }
     }
   }
-};
+}
 </script>
 
 <style scoped>
@@ -270,13 +270,13 @@ export default {
   height: 100%;
 }
 #wrapper:before {
-  content: "";
+  /* content: "";
   display: block;
-  padding-top: 178%;
+  padding-top: 178%; */
   /* padding-top: 100vh; 4:3の比率の場合 100% / 4 *3 1136/640 = 1.78 */
-  background-image: url("../../../assets/img/ui/bg.jpg");
+  /* background-image: url("../../../assets/img/ui/bg.jpg");
   background-size: 120%;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat; */
 }
 
 #base_area {

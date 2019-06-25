@@ -5,25 +5,25 @@
 </template>
 
 <script>
-import Base from "@/components/4_templates/Base.vue";
-import { mapState } from "vuex";
+import Base from '@/components/4_templates/Base.vue'
+import { mapState } from 'vuex'
 
 export default {
   components: {
     Base
   },
   computed: {
-    ...mapState(["userModule"])
+    ...mapState(['userModule'])
   },
   methods: {
     goInGame: function() {
-      this.$router.push("result");
+      this.$router.push('result')
     },
     reset: function() {
-      this.$store.dispatch("userModule/roundEndCard");
+      this.$store.dispatch('userModule/roundEndCard')
     }
   }
-};
+}
 </script>
 
 <style scoped>
