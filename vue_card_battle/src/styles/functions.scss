@@ -1,0 +1,29 @@
+/*-------------------------------------------------------------------
+ * Functions
+ * ----------------------------------------------------------------*/
+@function convertPxToVw($size, $viewport: 1136) {
+    $rate: 100 / $viewport;
+    @return $rate * $size * 1vw;
+}
+
+/*-------------------------------------------------------------------
+ * ButtonShadow
+ * ----------------------------------------------------------------*/
+// @include mixin_button_shadow;
+@mixin mixin_button_shadow() {
+    box-shadow: 0 convertPxToVw(4) convertPxToVw(12) 0 rgba(#000, 0.7), 0 convertPxToVw(4) convertPxToVw(8) 0 rgba(#000, 0.5);
+}
+
+/*-------------------------------------------------------------------
+ * 文字列を指定して...を表示する
+ * ----------------------------------------------------------------*/
+// $line-cnt : ライン数
+// @include multiEllipsis(3);
+@mixin multiEllipsis($line-count) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: $line-count; //ライン数
+    -webkit-box-orient: vertical;
+    word-wrap:break-word;
+}
