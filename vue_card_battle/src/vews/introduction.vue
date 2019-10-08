@@ -1,8 +1,12 @@
 <template>
   <div>
-    <div>Google Chromeの検証機能でiPhone6~8を選択してプレイしてね！</div>
-    <div>じゃんけんカードを選んで相手のHPを０にしたら勝利！</div>
-
+    <div class="text">
+      <p class="titile">カードを選んでカードを出そう</p>
+      <p>タップしたカードでじゃんけんするよ！</p>
+      <p>じゃんけんに勝てば相手にダメージ</p>
+      <p>あいこだとお互いダメージを受けるぞ</p>
+      <p class="titile">相手のHPを0にして勝利しよう！</p>
+    </div>
     <div class="btn" @click="goInGame()">プレイ！</div>
   </div>
 </template>
@@ -19,6 +23,13 @@ export default {
 </script>
 
 <style scoped>
+.text{
+  padding: 10% 5%;
+}
+.titile{
+  font-weight: bold;
+  font-size: 20px;
+}
 .btn {
   text-align: center;
   display: inline-block;

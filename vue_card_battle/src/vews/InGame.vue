@@ -30,6 +30,7 @@ export default {
 #ingame{
   width: 100%;
   height: 100%;
+  background: antiquewhite;
 }
 .btn {
   position: absolute;

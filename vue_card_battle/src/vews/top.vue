@@ -23,17 +23,18 @@ export default {
   width: 250px;
   position: absolute;
   top: 160px;
-  left: 85px;
+  left: 80px;
 }
 .game_title{
+  padding-top: 18px;
   text-align: center;
-  font-size: 26px;
+  font-size: 24px;
 }
 .game_subtitle{
   text-align: center;
   font-size: 22px;
   position: absolute;
-  bottom: 60px;
+  bottom: 80px;
   width: 100%;
 }
 .btn {
@@ -47,7 +48,7 @@ export default {
   border-radius: 3px;
   width: 120px;
   position: absolute;
-  bottom: 20px;
+  bottom: 40px;
   left: 110px;
 }
 .btn:active {
