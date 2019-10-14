@@ -6,8 +6,6 @@ import introduction from '@/vews/introduction'
 import ResultWin from '@/vews/resultWin'
 import ResultLose from '@/vews/resultWin'
 import ResultDraw from '@/vews/resultDraw'
-
-
 Vue.use(Router)
 
 export default new Router({

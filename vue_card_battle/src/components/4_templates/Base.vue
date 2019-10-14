@@ -118,9 +118,7 @@ export default {
       if (this.is_user_choiced) {
         return;
       }
-      console.info(this.$EventBus);
       this.is_user_choiced = true;
-      console.info(this.$store);
       this.setShowCard(type);
       this.choiceCard(type);
       this.randamChoice();
@@ -239,12 +237,18 @@ export default {
         this.enemyModule.user_status_data.hp <= 0 &&
         this.userModule.user_status_data.hp <= 0
       ) {
+        this.$store.dispatch("enemyModule/gameResetHp");
+        this.$store.dispatch("userModule/gameResetHp");
         this.$router.push("resultDraw");
       }
       if (this.enemyModule.user_status_data.hp <= 0) {
+        this.$store.dispatch("enemyModule/gameResetHp");
+        this.$store.dispatch("userModule/gameResetHp");
         this.$router.push("resultWin");
       }
       if (this.userModule.user_status_data.hp <= 0) {
+        this.$store.dispatch("enemyModule/gameResetHp");
+        this.$store.dispatch("userModule/gameResetHp");
         this.$router.push("resultLose");
       }
     }

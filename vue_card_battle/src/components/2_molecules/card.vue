@@ -44,9 +44,7 @@ export default {
       is_show: { type: Boolean, default: true }
     }
   },
-  created() {
-    console.info(this.card_data);
-  },
+  created() {},
   computed: {},
   methods: {}
 };
