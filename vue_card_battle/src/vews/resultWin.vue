@@ -11,10 +11,10 @@ export default {
   components: {},
   methods: {
     goInGame: function() {
-      this.$router.push('/')
+      this.$router.push("/");
     }
   }
-}
+};
 </script>
 
 <style scoped>

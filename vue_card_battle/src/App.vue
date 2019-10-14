@@ -1,17 +1,17 @@
 <template>
   <div class="apps">
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'App'
-}
+  name: "App"
+};
 </script>
 
 <style>
-.apps{
+.apps {
   position: absolute;
   width: 100%;
   height: 100%;

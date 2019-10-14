@@ -23,7 +23,8 @@ module.exports = {
     "generator-star-spacing": "off",
     "space-before-function-paren": 0,
     "prettier.singleQuote": true,
-    "prettier.semi": false,
+    // "prettier.semi": true,
+    "semi": ["warn", "always"],
     // allow debugger during development
     "no-debugger": process.env.NODE_ENV === "production" ? "error" : "off"
   }

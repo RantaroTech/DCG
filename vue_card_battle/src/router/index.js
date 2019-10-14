@@ -1,12 +1,12 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import InGame from '@/vews/InGame'
-import Top from '@/vews/top'
-import introduction from '@/vews/introduction'
-import ResultWin from '@/vews/resultWin'
-import ResultLose from '@/vews/resultWin'
-import ResultDraw from '@/vews/resultDraw'
-Vue.use(Router)
+import Vue from 'vue';
+import Router from 'vue-router';
+import InGame from '@/vews/InGame';
+import Top from '@/vews/top';
+import introduction from '@/vews/introduction';
+import ResultWin from '@/vews/resultWin';
+import ResultLose from '@/vews/resultWin';
+import ResultDraw from '@/vews/resultDraw';
+Vue.use(Router);
 
 export default new Router({
   mode: 'history',
@@ -49,4 +49,4 @@ export default new Router({
 
     }
   ]
-})
+});

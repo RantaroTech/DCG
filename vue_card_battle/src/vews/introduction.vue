@@ -28,7 +28,7 @@ export default {
 .text {
   text-align: center;
   width: 90%;
-  margin: 10vh auto 0;
+  margin: 20% auto 0;
 }
 .titile {
   font-weight: bold;
@@ -36,7 +36,7 @@ export default {
 }
 .btn_box {
   position: absolute;
-  bottom: 5vh;
+  bottom: 8%;
   left: 0;
   width: 100%;
 }

@@ -24,11 +24,11 @@ export default {
 .top_img {
   width: 60%;
   position: absolute;
-  top: 25vh;
+  top: 25%;
   left: 25%;
 }
 .game_title {
-  padding-top: 18px;
+  padding-top: 20%;
   text-align: center;
   font-size: 24px;
 }
@@ -41,7 +41,7 @@ export default {
 }
 .btn_box {
   position: absolute;
-  bottom: 5vh;
+  bottom: 8%;
   left: 0;
   width: 100%;
 }

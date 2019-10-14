@@ -17,72 +17,72 @@ const enemyModule = {
         },
         paper: { name: 'paper', atack: 900, is_show: true, is_choice: false }
       }
-    }
+    };
   },
   mutations: {
     changeHp: function (state, num) {
-      state.user_status_data.hp -= num
+      state.user_status_data.hp -= num;
     },
     resetUserCard: function (state) {
-      state.card_data.rock.is_choice = false
-      state.card_data.scissors.is_choice = false
-      state.card_data.paper.is_choice = false
+      state.card_data.rock.is_choice = false;
+      state.card_data.scissors.is_choice = false;
+      state.card_data.paper.is_choice = false;
 
-      state.card_data.rock.is_show = true
-      state.card_data.scissors.is_show = true
-      state.card_data.paper.is_show = true
+      state.card_data.rock.is_show = true;
+      state.card_data.scissors.is_show = true;
+      state.card_data.paper.is_show = true;
     },
     choiceRock: function (state) {
-      state.card_data.rock.is_choice = true
+      state.card_data.rock.is_choice = true;
     },
     choiceScissors: function (state) {
-      state.card_data.scissors.is_choice = true
+      state.card_data.scissors.is_choice = true;
     },
     choicePaper: function (state) {
-      state.card_data.paper.is_choice = true
+      state.card_data.paper.is_choice = true;
     },
     hideRock: function (state) {
-      state.card_data.rock.is_show = false
+      state.card_data.rock.is_show = false;
     },
     hideScissors: function (state) {
-      state.card_data.scissors.is_show = false
+      state.card_data.scissors.is_show = false;
     },
     hidePaper: function (state) {
-      state.card_data.paper.is_show = false
+      state.card_data.paper.is_show = false;
     },
     resetUserHP: function (state) {
-      state.user_status_data.hp = 2600
+      state.user_status_data.hp = 2600;
     }
   },
   actions: {
     setChangeHp: function (state, num) {
-      this.commit('enemyModule/changeHp', num)
+      this.commit('enemyModule/changeHp', num);
     },
     roundEndCard: function () {
-      this.commit('enemyModule/resetUserCard', null, { root: true })
+      this.commit('enemyModule/resetUserCard', null, { root: true });
     },
     setChoiceRock() {
-      this.commit('enemyModule/choiceRock', null, { root: true })
+      this.commit('enemyModule/choiceRock', null, { root: true });
     },
     setChoiceScissors() {
-      this.commit('enemyModule/choiceScissors', null, { root: true })
+      this.commit('enemyModule/choiceScissors', null, { root: true });
     },
     setChoicePaper() {
-      this.commit('enemyModule/choicePaper', null, { root: true })
+      this.commit('enemyModule/choicePaper', null, { root: true });
     },
     setHideRock() {
-      this.commit('enemyModule/hideRock', null, { root: true })
+      this.commit('enemyModule/hideRock', null, { root: true });
     },
     setHideScissors() {
-      this.commit('enemyModule/hideScissors', null, { root: true })
+      this.commit('enemyModule/hideScissors', null, { root: true });
     },
     setHidePaper() {
-      this.commit('enemyModule/hidePaper', null, { root: true })
+      this.commit('enemyModule/hidePaper', null, { root: true });
     },
     gameResetHp() {
-      this.commit('enemyModule/resetUserHP', null, { root: true })
+      this.commit('enemyModule/resetUserHP', null, { root: true });
     }
   }
-}
+};
 
-export default enemyModule
+export default enemyModule;

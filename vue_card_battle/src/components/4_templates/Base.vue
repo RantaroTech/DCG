@@ -83,7 +83,6 @@ import Character from "@/components/1_atoms/Character";
 import Card from "@/components/2_molecules/card";
 import store from "@/store/store";
 import { mapState } from "vuex";
-import Vue from "vue";
 
 export default {
   components: {
@@ -272,9 +271,9 @@ export default {
 }
 .janken_area {
   width: 100%;
-  height: 50vh;
+  height: 50%;
   position: absolute;
-  top: 25vh;
+  top: 25%;
 }
 
 .enemy_card_pos {
@@ -590,24 +589,24 @@ export default {
 
 .enemy_hp {
   position: absolute;
-  top: 2vh;
+  top: 5%;
   right: 2vw;
   background: rgb(255, 62, 62);
 }
 .my_hp {
   position: absolute;
-  bottom: 2vh;
+  bottom: 5%;
   left: 2vw;
   background: #3d92d6;
 }
 .enemy_chara {
   position: absolute;
-  top: 1vh;
+  top: 5%;
   left: 2vw;
 }
 .my_chara {
   position: absolute;
-  bottom: 1vh;
+  bottom: 5%;
   right: 2vw;
 }
 </style>
