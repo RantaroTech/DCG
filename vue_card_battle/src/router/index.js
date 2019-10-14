@@ -27,8 +27,7 @@ export default new Router({
       path: '/InGame',
       name: 'InGame',
       component: InGame
-    }
-    ,
+    },
     {
       path: '/ResultDraw',
       name: 'ResultDraw',
@@ -43,6 +42,13 @@ export default new Router({
       path: '/ResultLose',
       name: 'ResultLose',
       component: ResultLose
+    },
+    // 不明パスへのリンクはTopへ飛ばす
+    {
+      path: '*',
+      name: 'Top',
+      component: Top
+
     }
   ]
 })
